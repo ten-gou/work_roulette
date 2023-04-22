@@ -1,10 +1,13 @@
 import os
-from task_functions import createTask, randomTask, searchSingleTask, searchAllTask, removeTask, removeAllTasks
+import string
+from task_functions import createTask, checkEmpty, randomTask, searchSingleTask, searchAllTask, removeTask, removeAllTasks
 from verify import verify
 
 def work_roulette():
-    if os.path.isfile('./tasks.json') == False:
+    if os.path.isfile('tasks.json') == False:
         open("tasks.json", "x")
+
+    empty = checkEmpty()
 
     print('What would you like to do?')
     print('[A] Add a new task') #CreateTask
@@ -19,26 +22,24 @@ def work_roulette():
     if action == 'a':
         name = input("Input the new task that you would like to add to the list:")
         weight = input("Input the weight/importance of the task:")
+        while weight not in string.digits or len(weight) < 1:
+            weight = input("Please input a number")
         createTask(name, weight)
-        work_roulette()
-    elif action == 'b':
+    elif action == 'b' and empty == False:
         randomTask()
-        work_roulette()
-    elif action == 'c':
+    elif action == 'c' and empty == False:
         searchAllTask()
-        work_roulette()
-    elif action == 'd':
+    elif action == 'd' and empty == False:
         taskSelect = input("Which task are you searching for?").casefold()
         searchSingleTask(taskSelect)
-        work_roulette()
-    elif action == 'e':
+    elif action == 'e' and empty == False:
         taskSelect = input("Which task do you want to remove?").casefold()
         removeTask(taskSelect)
-        work_roulette()
     elif action == 'f':
         removeAllTasks()
-        work_roulette()
     elif action == 'g':
         print('Goodbye!')
+        exit()
+    work_roulette()
 
 work_roulette()

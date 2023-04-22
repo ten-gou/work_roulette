@@ -2,6 +2,11 @@ import json
 import random
 from verify import verify
 
+def checkEmpty():
+    with open("tasks.json") as tasks:
+        taskData = json.load(tasks)
+        return len(taskData) < 1
+
 def createTask(name, weight):
     taskDataEntry = {"taskName": name,
                      "weight": weight}
