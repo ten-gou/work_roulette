@@ -12,9 +12,8 @@ def main():
     action = verify(6)
 
     if action == 'a':
-        print("Input the new task that you would like to add to the list:")
-        name = input()
-        weight = input()
+        name = input("Input the new task that you would like to add to the list:")
+        weight = input("Input the weight/importance of the task:")
         createTask(name, weight)
         main()
     elif action == 'b':
@@ -24,13 +23,11 @@ def main():
         searchAllTask()
         main()
     elif action == 'd':
-        print("Which task are you searching for?")
-        taskSelect = input().casefold()
+        taskSelect = input("Which task are you searching for?").casefold()
         searchSingleTask(taskSelect)
         main()
     elif action == 'e':
-        print("Which task do you want to remove?")
-        taskSelect = input().casefold()
+        taskSelect = input("Which task do you want to remove?").casefold()
         removeTask(taskSelect)
         main()
     elif action == 'f':

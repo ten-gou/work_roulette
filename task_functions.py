@@ -1,28 +1,37 @@
 import json
 import random
+from verify import verify
 
 def createTask(name, weight):
     taskDataEntry = {"taskName": name,
                      "weight": weight}
     with open('tasks.json', encoding = 'utf-8') as tasks:
         taskData = json.load(tasks)
-        taskData.append(taskDataEntry)
-        duplicate = False
-
         if len(taskData) == 0:
-            file = open('tasks.json', 'w')
-            json.dump(taskData, file, indent = 2)
-            file.close()
+            if name != "cancel" or weight != "cancel":
+                file = open('tasks.json', 'w')
+                json.dump(taskData, file, indent = 2)
+                file.close()
         else:
-            for task in taskData:
-                if name == task:
-                    print(f"{task['taskName']} has already been found within the json!")
-                    duplicate = True
-            if duplicate == False:
+            filtered = [task["taskName"] for task in taskData]
+            if name in filtered:
+                print(f"{name} has already been found within the json!")
+            else:
                 if name != "cancel" or weight != "cancel":
+                    taskData.append(taskDataEntry)
                     file = open('tasks.json', 'w')
                     json.dump(taskData, file, indent = 2)
                     file.close()
+
+def updateWeight(name, newWeight, index):
+    taskDataEntry = {"taskName": name,
+                     "weight": newWeight}
+    with open('tasks.json', encoding = 'utf-8') as tasks:
+        taskData = json.load(tasks)
+        taskData[index] = taskDataEntry
+        file = open('tasks.json', 'w')
+        json.dump(taskData, file, indent = 2)
+        file.close()
 
 def randomTask():
     with open('tasks.json', "r", encoding = "utf-8") as tasks:
@@ -39,14 +48,20 @@ def randomTask():
 def searchSingleTask(data):
     with open('tasks.json') as tasks:
         taskData = json.load(tasks)
-        i = 0
-        for task in taskData:
-            if data == task['taskName']:
-                print(f"The task, {task['taskName']}, has been found.")
-            elif i == len(task):
-                print('Task not found!')
-                break
-            i+=1
+        filtered = [task["taskName"] for task in taskData]
+        if data in filtered:
+            print(f"The task, {data}, has been found.")
+            print("Would you like to:\n[A] Change the weight\n[B] Delete the tag\n[C] Return to the main menu\n")
+            choice = verify(3)
+
+            if choice == 'a':
+                #change weight
+                newWeight = input("What would you like to change the weight to?")
+                updateWeight(data, newWeight, filtered.index(data))
+            elif choice == 'b':
+                removeTask(data)
+        else:
+            print('Task not found!')
 
 def searchAllTask():
     with open('tasks.json') as tasks:
@@ -58,15 +73,12 @@ def removeTask(data):
     if data != "cancel":
         with open('tasks.json', 'r', encoding = 'utf-8') as tasks:
             taskData = json.load(tasks)
-            i = 0
-            for task in taskData:
-                if data == task['taskName']:
-                    print(f"{task['taskName']} has been successfully removed")
-                    taskData.pop(i)
-                elif i == len(task):
-                    print('Task not found!')
-                    break
-                i+=1
+            filtered = [task["taskName"] for task in taskData]
+            if data in filtered:
+                print(f"{data} has been successfully removed")
+                taskData.pop(filtered.index(data))
+            else:
+                print('Task not found!')
 
         with open("tasks.json", 'w', encoding = 'utf-8') as f:
             f.write(json.dumps(taskData, indent = 2))
