@@ -30,5 +30,13 @@
   {
     "taskName": "practice 3d modeling",
     "weight": "2"
+  },
+  {
+    "taskName": "do some sketches and post them to art sites",
+    "weight": "1"
+  },
+  {
+    "taskName": "work on the visual novel",
+    "weight": "2"
   }
 ]
