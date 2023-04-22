@@ -3,18 +3,15 @@ import string
 #creates a multiple choice input and verifies if input is accounted for
 def verify(num):
     value = input().casefold()
-    
     letterSelect = []
     i = 0
     while i < num:
         letterSelect.append(string.ascii_lowercase[i])
         i+=1
-
-    if value in letterSelect:
-        return value
-    else:
-        print("Please make a valid input!")
-        verify(num) #loops the program if incorrect input
+    while value not in letterSelect:
+        print(letterSelect)
+        value = input("Please make a valid input!").casefold() #loops the program if incorrect input
+    return value
 
 
 #converts letter input into number input

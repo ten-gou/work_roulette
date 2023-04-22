@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "taskName": "work on your commissions",
+    "weight": "3"
+  },
+  {
+    "taskName": "send out job applications",
+    "weight": "4"
+  },
+  {
+    "taskName": "work out",
+    "weight": "2"
+  },
+  {
+    "taskName": "work on the KIJIN comic",
+    "weight": "3"
+  },
+  {
+    "taskName": "work on the TAEWY doujin",
+    "weight": "3"
+  },
+  {
+    "taskName": "clean up your room",
+    "weight": "2"
+  },
+  {
+    "taskName": "do Revature coding practices",
+    "weight": "3"
+  },
+  {
+    "taskName": "practice 3d modeling",
+    "weight": "2"
+  }
+]
