@@ -13,7 +13,9 @@ def main():
 
     if action == 'a':
         print("Input the new task that you would like to add to the list:")
-        createTask(input())
+        name = input()
+        weight = input()
+        createTask(name, weight)
         main()
     elif action == 'b':
         randomTask()
