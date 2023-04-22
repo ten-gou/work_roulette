@@ -13,21 +13,19 @@ def createTask(name, weight):
     with open('tasks.json', encoding = 'utf-8') as tasks:
         taskData = json.load(tasks)
         if len(taskData) == 0:
-            if name != "cancel" or weight != "cancel":
-                taskData.append(taskDataEntry)
-                file = open('tasks.json', 'w')
-                json.dump(taskData, file, indent = 2)
-                file.close()
+            taskData.append(taskDataEntry)
+            file = open('tasks.json', 'w')
+            json.dump(taskData, file, indent = 2)
+            file.close()
         else:
             filtered = [task["taskName"] for task in taskData]
             if name in filtered:
                 print(f"{name} has already been found within the json!")
             else:
-                if name != "cancel" or weight != "cancel":
-                    taskData.append(taskDataEntry)
-                    file = open('tasks.json', 'w')
-                    json.dump(taskData, file, indent = 2)
-                    file.close()
+                taskData.append(taskDataEntry)
+                file = open('tasks.json', 'w')
+                json.dump(taskData, file, indent = 2)
+                file.close()
 
 def updateWeight(name, newWeight, index):
     taskDataEntry = {"taskName": name,
@@ -93,18 +91,17 @@ def searchAllTask():
             print(task)
 
 def removeTask(data):
-    if data != "cancel":
-        with open('tasks.json', 'r', encoding = 'utf-8') as tasks:
-            taskData = json.load(tasks)
-            filtered = [task["taskName"] for task in taskData]
-            if data in filtered:
-                print(f"{data} has been successfully removed")
-                taskData.pop(filtered.index(data))
-            else:
-                print('Task not found!')
+    with open('tasks.json', 'r', encoding = 'utf-8') as tasks:
+        taskData = json.load(tasks)
+        filtered = [task["taskName"] for task in taskData]
+        if data in filtered:
+            print(f"{data} has been successfully removed")
+            taskData.pop(filtered.index(data))
+        else:
+            print('Task not found!')
 
-        with open("tasks.json", 'w', encoding = 'utf-8') as f:
-            f.write(json.dumps(taskData, indent = 2))
+    with open("tasks.json", 'w', encoding = 'utf-8') as f:
+        f.write(json.dumps(taskData, indent = 2))
 
 def removeAllTasks():
     with open("tasks.json", 'w', encoding = 'utf-8') as f:
