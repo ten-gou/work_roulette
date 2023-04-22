@@ -1,8 +1,9 @@
 import json
 import random
 
-def createTask(data):
-    taskDataEntry = {"taskName": data}
+def createTask(name, weight):
+    taskDataEntry = {"taskName": name,
+                     "weight": weight}
     with open('tasks.json', encoding = 'utf-8') as tasks:
         taskData = json.load(tasks)
         taskData.append(taskDataEntry)
@@ -14,11 +15,11 @@ def createTask(data):
             file.close()
         else:
             for task in taskData:
-                if data == task:
+                if name == task:
                     print(f"{task['taskName']} has already been found within the json!")
                     duplicate = True
             if duplicate == False:
-                if data != "cancel":
+                if name != "cancel" or weight != "cancel":
                     file = open('tasks.json', 'w')
                     json.dump(taskData, file, indent = 2)
                     file.close()
@@ -26,8 +27,14 @@ def createTask(data):
 def randomTask():
     with open('tasks.json', "r", encoding = "utf-8") as tasks:
         taskData = json.load(tasks)
-        randTask = random.randint(1, len(taskData))
-        print(f"You should {taskData[randTask-1]['taskName']}. NOW!")
+        randomList = []
+        for task in taskData:
+            i = 0
+            while i < int(task["weight"]):
+                randomList.append(task["taskName"])
+                i += 1
+        randTask = int(random.randint(1, len(randomList)))
+        print(f"You should {randomList[randTask-1]}. NOW!")
 
 def searchSingleTask(data):
     with open('tasks.json') as tasks:
